@@ -2,7 +2,7 @@ import React from "react";
 
 function Login() {
   const handleLogin = () => {
-    window.location.href = "http://localhost:3001/login";
+    window.location.href = "https://redditsearch-5irh.onrender.com/login";
   };
 
   // After Reddit OAuth, backend should redirect to a page that can extract the username and save it to localStorage.

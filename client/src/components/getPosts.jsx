@@ -42,7 +42,7 @@ function GetPosts() {
       .map((k) => k.trim())
       .filter((k) => k.length > 0);
     try {
-      const response = await fetch(`http://localhost:3001/keyword-search`, {
+      const response = await fetch(`https://redditsearch-5irh.onrender.com/keyword-search`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ keywords: keywordArray, redditUsername }),
@@ -60,7 +60,7 @@ function GetPosts() {
     setReplyLoading((prev) => ({ ...prev, [idx]: true }));
     setReplies((prev) => ({ ...prev, [idx]: undefined }));
     try {
-      const response = await fetch("http://localhost:3001/generate-reply", {
+      const response = await fetch("https://redditsearch-5irh.onrender.com/generate-reply", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ title, body, redditUsername }),

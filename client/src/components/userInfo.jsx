@@ -25,7 +25,7 @@ function UserInfo() {
     setError("");
     const redditUsername = localStorage.getItem("redditUsername");
     try {
-      const response = await fetch("http://localhost:3001/save-user-info", {
+      const response = await fetch("https://redditsearch-5irh.onrender.com/save-user-info", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...form, redditUsername }),
