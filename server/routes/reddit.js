@@ -80,7 +80,7 @@ router.get("/callback", async (req, res) => {
     fs.writeFileSync("tokens.json", JSON.stringify({ accessToken, refreshToken }));
 
     // Redirect to frontend
-    res.redirect(`http://localhost:5173/dashboard?user=${redditUsername}`);
+    res.redirect(`https://redditreplytool.netlify.app/dashboard?user=${redditUsername}`);
   } catch (err) {
     console.error("OAuth callback error:", err.response?.data || err.message);
     res.status(500).send("Reddit Auth Failed");

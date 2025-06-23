@@ -11,30 +11,45 @@ function Login() {
   return (
     <div style={{
       minHeight: "100vh",
+      width: "100vw",
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
       justifyContent: "center",
-      background: "linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%)"
+      background: "linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%)",
+      padding: 0,
+      margin: 0,
     }}>
-      <h2 style={{ color: '#2d3a4b', marginBottom: 24 }}>Sign in with Reddit</h2>
-      <button
-        onClick={handleLogin}
-        style={{
-          padding: '14px 32px',
-          fontSize: 18,
-          borderRadius: 8,
-          background: 'linear-gradient(90deg, #6dd5ed 0%, #2193b0 100%)',
-          color: '#fff',
-          border: 'none',
-          fontWeight: 600,
-          boxShadow: '0 2px 8px #b6c6e0',
-          letterSpacing: 1,
-          cursor: 'pointer',
-        }}
-      >
-        Login with Reddit
-      </button>
+      <div style={{
+        background: "#fff",
+        padding: 40,
+        borderRadius: 12,
+        boxShadow: "0 4px 24px #b6c6e0",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        minWidth: 320,
+        maxWidth: 400,
+      }}>
+        <h2 style={{ color: '#2d3a4b', marginBottom: 24, textAlign: 'center' }}>Sign in with Reddit</h2>
+        <button
+          onClick={handleLogin}
+          style={{
+            padding: '14px 32px',
+            fontSize: 18,
+            borderRadius: 8,
+            background: 'linear-gradient(90deg, #6dd5ed 0%, #2193b0 100%)',
+            color: '#fff',
+            border: 'none',
+            fontWeight: 600,
+            boxShadow: '0 2px 8px #b6c6e0',
+            letterSpacing: 1,
+            cursor: 'pointer',
+          }}
+        >
+          Login with Reddit
+        </button>
+      </div>
     </div>
   );
 }
