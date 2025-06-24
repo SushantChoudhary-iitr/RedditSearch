@@ -111,7 +111,7 @@ function GetPosts() {
         <Link to="/dashboard" style={tabStyle(location.pathname === "/dashboard")}>Keyword Search</Link>
         <Link to="/info" style={tabStyle(location.pathname === "/info")}>User Info</Link>
       </div>
-      <div style={{ width: "100%", maxWidth: 1700, marginTop: 10, display: "flex", flexDirection: "column", alignItems: "center", marginLeft: "auto", marginRight: "auto" }}>
+      <div style={{ width: "100%", maxWidth: 1700, marginTop: 10, display: "flex", flexDirection: "column", alignItems: "center", marginLeft: "auto", marginRight: "auto", paddingLeft: 32, paddingRight: 32 }}>
         <h2 style={{ marginBottom: 18, color: '#2d3a4b', letterSpacing: 1, fontWeight: 700, fontSize: 32, textShadow: '0 2px 8px #e0eafc' }}>
           Reddit Keyword Search
         </h2>
@@ -182,7 +182,7 @@ function GetPosts() {
                 textAlign: "center",
                 border: '1.5px solid #cfdef3',
                 transition: 'box-shadow 0.2s',
-                width: 'calc(100vw - 80px)',
+                width: '100%',
                 maxWidth: 1600,
                 minWidth: 320,
                 display: 'flex',
