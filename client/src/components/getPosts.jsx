@@ -111,7 +111,7 @@ function GetPosts() {
         <Link to="/dashboard" style={tabStyle(location.pathname === "/dashboard")}>Keyword Search</Link>
         <Link to="/info" style={tabStyle(location.pathname === "/info")}>User Info</Link>
       </div>
-      <div style={{ width: "100%", maxWidth: 700, marginTop: 10, display: "flex", flexDirection: "column", alignItems: "center" }}>
+      <div style={{ width: "100%", maxWidth: 1700, marginTop: 10, display: "flex", flexDirection: "column", alignItems: "center", marginLeft: "auto", marginRight: "auto" }}>
         <h2 style={{ marginBottom: 18, color: '#2d3a4b', letterSpacing: 1, fontWeight: 700, fontSize: 32, textShadow: '0 2px 8px #e0eafc' }}>
           Reddit Keyword Search
         </h2>
@@ -169,7 +169,7 @@ function GetPosts() {
         {!loading && results.length === 0 && !error && (
           <p style={{ color: "#888", fontWeight: 500 }}>No posts found. Try different keywords.</p>
         )}
-        <ul style={{ listStyle: "none", padding: 0, width: "100%", marginTop: 10 }}>
+        <ul style={{ listStyle: "none", padding: 0, width: "100%", marginTop: 10, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           {results.map((post, idx) => (
             <li
               key={idx}
