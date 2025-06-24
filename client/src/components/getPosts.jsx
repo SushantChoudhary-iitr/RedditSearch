@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
+import { FaArrowUp, FaRegComment } from "react-icons/fa";
 
 function GetPosts() {
   const [keywords, setKeywords] = useState("");
@@ -233,8 +234,17 @@ function GetPosts() {
                     {post.title}
                   </a>
                 </div>
-                <div style={{ fontSize: 16, color: '#555', margin: '4px 0', textAlign: 'center' }}>
-                  <b>Score:</b> {post.score}
+                {/* Score, Comments, Trending Row */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: 28, margin: '8px 0', justifyContent: 'center' }}>
+                  <span style={{ display: 'flex', alignItems: 'center', fontSize: 16, color: '#888' }}>
+                    <FaArrowUp style={{ color: '#6cbe6c', fontSize: 18, marginRight: 4 }} />
+                    {post.score}
+                  </span>
+                  <span style={{ display: 'flex', alignItems: 'center', fontSize: 16, color: '#888' }}>
+                    <FaRegComment style={{ fontSize: 18, marginRight: 4 }} />
+                    {post.num_comments ?? 'N/A'}
+                  </span>
+                  {/* Add trending or other icons here if needed */}
                 </div>
                 <div style={{ fontSize: 16, color: '#555', margin: '4px 0', textAlign: 'center' }}>
                   <b>Created:</b> {post.created_utc ? new Date(post.created_utc * 1000).toLocaleString() : 'N/A'}
