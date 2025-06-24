@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
-import { FaArrowUp, FaRegComment } from "react-icons/fa";
+import { FaArrowUp, FaRegComment, FaChartLine } from "react-icons/fa";
 
 function GetPosts() {
   const [keywords, setKeywords] = useState("");
@@ -188,7 +188,7 @@ function GetPosts() {
                 minWidth: 320,
                 display: 'flex',
                 flexDirection: 'row',
-                alignItems: 'flex-start',
+                alignItems: 'center',
                 marginLeft: 'auto',
                 marginRight: 'auto',
                 boxSizing: 'border-box',
@@ -196,13 +196,14 @@ function GetPosts() {
             >
               {/* Subreddit box on the left */}
               <div style={{
-                minWidth: 130,
-                maxWidth: 130,
-                marginRight: 24,
+                minWidth: 150,
+                maxWidth: 150,
+                marginRight: 32,
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'flex-start',
                 justifyContent: 'flex-start',
+                height: '100%',
               }}>
                 <div style={{
                   background: '#ffe5b4',
@@ -211,19 +212,25 @@ function GetPosts() {
                   padding: '8px 14px',
                   fontWeight: 700,
                   fontSize: 15,
-                  marginBottom: 10,
+                  marginBottom: 18,
                   textAlign: 'left',
                   wordBreak: 'break-word',
                   boxShadow: '0 1px 4px #f8d9b6',
                 }}>
                   {`r/${post.subreddit}`}
                 </div>
-                <div style={{ fontSize: 14, color: '#888', marginTop: 2, textAlign: 'left' }}>
-                  <b>Comments:</b> {post.num_comments ?? 'N/A'}
+                <div style={{ fontSize: 15, color: '#888', marginBottom: 10, display: 'flex', alignItems: 'center', gap: 6 }}>
+                  {post.num_comments ?? 'N/A'} <FaRegComment style={{ fontSize: 17, marginLeft: 2 }} />
+                </div>
+                <div style={{ fontSize: 15, color: '#888', marginBottom: 10, display: 'flex', alignItems: 'center', gap: 6 }}>
+                  <FaArrowUp style={{ color: '#6cbe6c', fontSize: 17 }} /> {post.score}
+                </div>
+                <div style={{ fontSize: 15, color: '#888', display: 'flex', alignItems: 'center', gap: 6 }}>
+                  <FaChartLine style={{ color: '#b85c00', fontSize: 17 }} /> Trending
                 </div>
               </div>
-              {/* Main post content */}
-              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              {/* Main post content, centered */}
+              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
                 <div style={{ fontSize: 22, fontWeight: 700, marginBottom: 8, color: '#2d3a4b', textAlign: 'center' }}>
                   <a
                     href={post.url}
@@ -233,18 +240,6 @@ function GetPosts() {
                   >
                     {post.title}
                   </a>
-                </div>
-                {/* Score, Comments, Trending Row */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: 28, margin: '8px 0', justifyContent: 'center' }}>
-                  <span style={{ display: 'flex', alignItems: 'center', fontSize: 16, color: '#888' }}>
-                    <FaArrowUp style={{ color: '#6cbe6c', fontSize: 18, marginRight: 4 }} />
-                    {post.score}
-                  </span>
-                  <span style={{ display: 'flex', alignItems: 'center', fontSize: 16, color: '#888' }}>
-                    <FaRegComment style={{ fontSize: 18, marginRight: 4 }} />
-                    {post.num_comments ?? 'N/A'}
-                  </span>
-                  {/* Add trending or other icons here if needed */}
                 </div>
                 <div style={{ fontSize: 16, color: '#555', margin: '4px 0', textAlign: 'center' }}>
                   <b>Created:</b> {post.created_utc ? new Date(post.created_utc * 1000).toLocaleString() : 'N/A'}
@@ -264,6 +259,9 @@ function GetPosts() {
                       padding: 14,
                       boxShadow: '0 1px 4px #e0eafc',
                       textAlign: 'center',
+                      maxWidth: 600,
+                      marginLeft: 'auto',
+                      marginRight: 'auto',
                     }}
                   >
                     {post.body}
