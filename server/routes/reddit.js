@@ -140,6 +140,7 @@ async function fetchPostsWithAuth(keywords, relevantSubreddits) {
           };
         }*/
 
+          console.log(`subreddit: ${p.data.subreddit}`);
           return {
             title,
             url: `https://reddit.com${p.data.permalink}`,
