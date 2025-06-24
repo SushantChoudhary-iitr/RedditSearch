@@ -191,6 +191,7 @@ async function fetchPostsWithAuth(keywords, relevantSubreddits) {
             subreddit: p.data.subreddit,
             body,
             created_utc: p.data.created_utc,
+            num_comments: p.data.num_comments,
             confidence
           };
         });

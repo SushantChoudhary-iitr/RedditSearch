@@ -42,7 +42,7 @@ function GetPosts() {
       .map((k) => k.trim())
       .filter((k) => k.length > 0);
     try {
-      const response = await fetch(`https://redditsearch-5irh.onrender.com/keyword-search`, {
+      const response = await fetch(`http://localhost:3001/keyword-search`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ keywords: keywordArray, redditUsername }),
@@ -60,7 +60,7 @@ function GetPosts() {
     setReplyLoading((prev) => ({ ...prev, [idx]: true }));
     setReplies((prev) => ({ ...prev, [idx]: undefined }));
     try {
-      const response = await fetch("https://redditsearch-5irh.onrender.com/generate-reply", {
+      const response = await fetch("http://localhost:3001/generate-reply", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ title, body, redditUsername }),
@@ -182,78 +182,115 @@ function GetPosts() {
                 textAlign: "center",
                 border: '1.5px solid #cfdef3',
                 transition: 'box-shadow 0.2s',
+                width: 600,
+                maxWidth: '90vw',
+                minWidth: 320,
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'flex-start',
               }}
             >
-              <div style={{ fontSize: 22, fontWeight: 700, marginBottom: 8, color: '#2d3a4b' }}>
-                <a
-                  href={post.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{ color: '#0079d3', textDecoration: 'none', wordBreak: 'break-word' }}
-                >
-                  {post.title}
-                </a>
-              </div>
-              <div style={{ fontSize: 16, color: '#555', margin: '4px 0' }}>
-                <b>Subreddit:</b> {post.subreddit} | <b>Score:</b> {post.score}
-              </div>
-              <div style={{ fontSize: 16, color: '#555', margin: '4px 0' }}>
-                <b>Created:</b> {post.created_utc ? new Date(post.created_utc * 1000).toLocaleString() : 'N/A'}
-              </div>
-              <div style={{ fontSize: 16, color: '#555', margin: '4px 0' }}>
-                <b>Confidence:</b> {typeof post.confidence === 'number' ? post.confidence : 'N/A'}
-              </div>
-              {post.body && (
-                <div
-                  style={{
-                    fontSize: 17,
-                    color: '#222',
-                    margin: '16px 0',
-                    whiteSpace: 'pre-line',
-                    background: '#f0f4fa',
-                    borderRadius: 8,
-                    padding: 14,
-                    boxShadow: '0 1px 4px #e0eafc',
-                  }}
-                >
-                  {post.body}
-                </div>
-              )}
-              <button
-                style={{
-                  padding: '10px 22px',
-                  fontSize: 16,
+              {/* Subreddit box on the left */}
+              <div style={{
+                minWidth: 110,
+                maxWidth: 110,
+                marginRight: 24,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'flex-start',
+                justifyContent: 'flex-start',
+              }}>
+                <div style={{
+                  background: '#ffe5b4',
+                  color: '#b85c00',
                   borderRadius: 8,
-                  marginTop: 10,
-                  cursor: 'pointer',
-                  background: 'linear-gradient(90deg, #2193b0 0%, #6dd5ed 100%)',
-                  color: '#fff',
-                  border: 'none',
-                  fontWeight: 600,
-                  boxShadow: '0 2px 8px #b6c6e0',
-                  letterSpacing: 1,
-                  transition: 'background 0.2s',
-                }}
-                onClick={() => handleGenerateReply(post.title, post.body, idx)}
-                disabled={replyLoading[idx]}
-              >
-                {replyLoading[idx] ? 'Generating...' : 'Generate Reply'}
-              </button>
-              {replies[idx] && (
-                <div
-                  style={{
-                    marginTop: 16,
-                    background: 'linear-gradient(120deg, #e0eafc 0%, #f8fbff 100%)',
-                    padding: 16,
-                    borderRadius: 8,
-                    color: '#333',
-                    fontSize: 16,
-                    boxShadow: '0 1px 4px #e0eafc',
-                  }}
-                >
-                  <b>Reply:</b> {replies[idx]}
+                  padding: '8px 14px',
+                  fontWeight: 700,
+                  fontSize: 15,
+                  marginBottom: 10,
+                  textAlign: 'left',
+                  wordBreak: 'break-word',
+                  boxShadow: '0 1px 4px #f8d9b6',
+                }}>
+                  {post.subreddit}
                 </div>
-              )}
+                <div style={{ fontSize: 14, color: '#888', marginTop: 2, textAlign: 'left' }}>
+                  <b>Comments:</b> {post.num_comments ?? 'N/A'}
+                </div>
+              </div>
+              {/* Main post content */}
+              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <div style={{ fontSize: 22, fontWeight: 700, marginBottom: 8, color: '#2d3a4b', textAlign: 'center' }}>
+                  <a
+                    href={post.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ color: '#0079d3', textDecoration: 'none', wordBreak: 'break-word' }}
+                  >
+                    {post.title}
+                  </a>
+                </div>
+                <div style={{ fontSize: 16, color: '#555', margin: '4px 0', textAlign: 'center' }}>
+                  <b>Score:</b> {post.score}
+                </div>
+                <div style={{ fontSize: 16, color: '#555', margin: '4px 0', textAlign: 'center' }}>
+                  <b>Created:</b> {post.created_utc ? new Date(post.created_utc * 1000).toLocaleString() : 'N/A'}
+                </div>
+                <div style={{ fontSize: 16, color: '#555', margin: '4px 0', textAlign: 'center' }}>
+                  <b>Confidence:</b> {typeof post.confidence === 'number' ? post.confidence : 'N/A'}
+                </div>
+                {post.body && (
+                  <div
+                    style={{
+                      fontSize: 17,
+                      color: '#222',
+                      margin: '16px 0',
+                      whiteSpace: 'pre-line',
+                      background: '#f0f4fa',
+                      borderRadius: 8,
+                      padding: 14,
+                      boxShadow: '0 1px 4px #e0eafc',
+                    }}
+                  >
+                    {post.body}
+                  </div>
+                )}
+                <button
+                  style={{
+                    padding: '10px 22px',
+                    fontSize: 16,
+                    borderRadius: 8,
+                    marginTop: 10,
+                    cursor: 'pointer',
+                    background: 'linear-gradient(90deg, #2193b0 0%, #6dd5ed 100%)',
+                    color: '#fff',
+                    border: 'none',
+                    fontWeight: 600,
+                    boxShadow: '0 2px 8px #b6c6e0',
+                    letterSpacing: 1,
+                    transition: 'background 0.2s',
+                  }}
+                  onClick={() => handleGenerateReply(post.title, post.body, idx)}
+                  disabled={replyLoading[idx]}
+                >
+                  {replyLoading[idx] ? 'Generating...' : 'Generate Reply'}
+                </button>
+                {replies[idx] && (
+                  <div
+                    style={{
+                      marginTop: 16,
+                      background: 'linear-gradient(120deg, #e0eafc 0%, #f8fbff 100%)',
+                      padding: 16,
+                      borderRadius: 8,
+                      color: '#333',
+                      fontSize: 16,
+                      boxShadow: '0 1px 4px #e0eafc',
+                    }}
+                  >
+                    <b>Reply:</b> {replies[idx]}
+                  </div>
+                )}
+              </div>
             </li>
           ))}
         </ul>
