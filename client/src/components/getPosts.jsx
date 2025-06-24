@@ -188,16 +188,16 @@ function GetPosts() {
                 minWidth: 320,
                 display: 'flex',
                 flexDirection: 'row',
-                alignItems: 'center',
+                alignItems: 'flex-start',
                 marginLeft: 'auto',
                 marginRight: 'auto',
                 boxSizing: 'border-box',
               }}
             >
-              {/* Subreddit box on the left */}
+              {/* Left info box */}
               <div style={{
-                minWidth: 150,
-                maxWidth: 150,
+                minWidth: 170,
+                maxWidth: 170,
                 marginRight: 32,
                 display: 'flex',
                 flexDirection: 'column',
@@ -219,14 +219,16 @@ function GetPosts() {
                 }}>
                   {`r/${post.subreddit}`}
                 </div>
-                <div style={{ fontSize: 15, color: '#888', marginBottom: 10, display: 'flex', alignItems: 'center', gap: 6 }}>
-                  {post.num_comments ?? 'N/A'} <FaRegComment style={{ fontSize: 17, marginLeft: 2 }} />
+                <div style={{ fontSize: 15, color: '#888', marginBottom: 10, display: 'flex', alignItems: 'center', gap: 6, textAlign: 'left' }}>
+                  <FaRegComment style={{ fontSize: 17, marginRight: 4 }} />
+                  {post.num_comments ?? 'N/A'} <span style={{marginLeft: 4}}>Comments</span>
                 </div>
-                <div style={{ fontSize: 15, color: '#888', marginBottom: 10, display: 'flex', alignItems: 'center', gap: 6 }}>
-                  <FaArrowUp style={{ color: '#6cbe6c', fontSize: 17 }} /> {post.score}
+                <div style={{ fontSize: 15, color: '#888', marginBottom: 10, display: 'flex', alignItems: 'center', gap: 6, textAlign: 'left' }}>
+                  <FaArrowUp style={{ color: '#6cbe6c', fontSize: 17, marginRight: 4 }} />
+                  {post.score} <span style={{marginLeft: 4}}>Upvotes</span>
                 </div>
-                <div style={{ fontSize: 15, color: '#888', display: 'flex', alignItems: 'center', gap: 6 }}>
-                  <FaChartLine style={{ color: '#b85c00', fontSize: 17 }} /> Trending
+                <div style={{ fontSize: 15, color: '#888', display: 'flex', alignItems: 'center', gap: 6, textAlign: 'left' }}>
+                  <FaChartLine style={{ color: '#b85c00', fontSize: 17, marginRight: 4 }} /> Trending
                 </div>
               </div>
               {/* Main post content, centered */}
