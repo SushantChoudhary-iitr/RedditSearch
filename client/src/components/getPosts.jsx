@@ -249,7 +249,7 @@ function GetPosts() {
                     whiteSpace: 'pre-line',
                     background: '#f0f4fa',
                     borderRadius: 8,
-                    padding: 18,
+                    padding: '18px 24px',
                     boxShadow: '0 1px 4px #e0eafc',
                     textAlign: 'center',
                     width: '100%',
@@ -326,7 +326,10 @@ function GetPosts() {
                   readOnly
                   style={{
                     width: '100%',
-                    minHeight: 60,
+                    minHeight: 90,
+                    height: replies[idx] && replies[idx].length > 200 ? 'auto' : 90,
+                    maxHeight: 350,
+                    overflowY: 'auto',
                     fontSize: 16,
                     borderRadius: 8,
                     border: '1.5px solid #b6c6e0',
