@@ -253,6 +253,7 @@ function GetPosts() {
                       borderRadius: 8,
                       padding: 14,
                       boxShadow: '0 1px 4px #e0eafc',
+                      textAlign: 'center',
                     }}
                   >
                     {post.body}
