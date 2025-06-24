@@ -179,7 +179,7 @@ function GetPosts() {
                 borderRadius: 16,
                 boxShadow: "0 4px 24px #b6c6e0",
                 background: "linear-gradient(120deg, #f8fbff 0%, #e0eafc 100%)",
-                padding: 28,
+                padding: 0,
                 textAlign: "center",
                 border: '1.5px solid #cfdef3',
                 transition: 'box-shadow 0.2s',
@@ -187,23 +187,22 @@ function GetPosts() {
                 maxWidth: 1100,
                 minWidth: 320,
                 display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'flex-start',
+                flexDirection: 'column',
+                alignItems: 'stretch',
                 marginLeft: 'auto',
                 marginRight: 'auto',
                 boxSizing: 'border-box',
               }}
             >
-              {/* Left info box */}
+              {/* Section 1: Top bar with subreddit, title, created, confidence */}
               <div style={{
-                minWidth: 170,
-                maxWidth: 170,
-                marginRight: 32,
                 display: 'flex',
-                flexDirection: 'column',
+                flexDirection: 'row',
                 alignItems: 'flex-start',
+                width: '100%',
+                padding: '24px 28px 0 28px',
+                boxSizing: 'border-box',
                 justifyContent: 'flex-start',
-                height: '100%',
               }}>
                 <div style={{
                   background: '#ffe5b4',
@@ -212,69 +211,85 @@ function GetPosts() {
                   padding: '8px 14px',
                   fontWeight: 700,
                   fontSize: 15,
-                  marginBottom: 18,
+                  marginRight: 24,
                   textAlign: 'left',
                   wordBreak: 'break-word',
                   boxShadow: '0 1px 4px #f8d9b6',
+                  minWidth: 90,
+                  maxWidth: 170,
                 }}>
                   {`r/${post.subreddit}`}
                 </div>
-                <div style={{ fontSize: 15, color: '#888', marginBottom: 10, display: 'flex', alignItems: 'center', gap: 6, textAlign: 'left' }}>
-                  <FaRegComment style={{ fontSize: 17, marginRight: 4 }} />
-                  {post.num_comments ?? 'N/A'} <span style={{marginLeft: 4}}>Comments</span>
-                </div>
-                <div style={{ fontSize: 15, color: '#888', marginBottom: 10, display: 'flex', alignItems: 'center', gap: 6, textAlign: 'left' }}>
-                  <FaArrowUp style={{ color: '#6cbe6c', fontSize: 17, marginRight: 4 }} />
-                  {post.score} <span style={{marginLeft: 4}}>Upvotes</span>
-                </div>
-                <div style={{ fontSize: 15, color: '#888', display: 'flex', alignItems: 'center', gap: 6, textAlign: 'left' }}>
-                  <FaChartLine style={{ color: '#b85c00', fontSize: 17, marginRight: 4 }} /> Trending
+                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                  <div style={{ fontSize: 22, fontWeight: 700, color: '#2d3a4b', textAlign: 'center' }}>
+                    <a
+                      href={post.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ color: '#0079d3', textDecoration: 'none', wordBreak: 'break-word' }}
+                    >
+                      {post.title}
+                    </a>
+                  </div>
+                  <div style={{ fontSize: 16, color: '#555', margin: '2px 0', textAlign: 'center' }}>
+                    <b>Created:</b> {post.created_utc ? new Date(post.created_utc * 1000).toLocaleString() : 'N/A'}
+                  </div>
+                  <div style={{ fontSize: 16, color: '#555', margin: '2px 0', textAlign: 'center' }}>
+                    <b>Confidence:</b> {typeof post.confidence === 'number' ? post.confidence : 'N/A'}
+                  </div>
                 </div>
               </div>
-              {/* Main post content, centered */}
-              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
-                <div style={{ fontSize: 22, fontWeight: 700, marginBottom: 8, color: '#2d3a4b', textAlign: 'center' }}>
-                  <a
-                    href={post.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{ color: '#0079d3', textDecoration: 'none', wordBreak: 'break-word' }}
-                  >
-                    {post.title}
-                  </a>
+              {/* Section 2: Body, full width */}
+              {post.body && (
+                <div
+                  style={{
+                    fontSize: 17,
+                    color: '#222',
+                    margin: '18px 0 0 0',
+                    whiteSpace: 'pre-line',
+                    background: '#f0f4fa',
+                    borderRadius: 8,
+                    padding: 18,
+                    boxShadow: '0 1px 4px #e0eafc',
+                    textAlign: 'center',
+                    width: '100%',
+                    boxSizing: 'border-box',
+                  }}
+                >
+                  {post.body}
                 </div>
-                <div style={{ fontSize: 16, color: '#555', margin: '4px 0', textAlign: 'center' }}>
-                  <b>Created:</b> {post.created_utc ? new Date(post.created_utc * 1000).toLocaleString() : 'N/A'}
-                </div>
-                <div style={{ fontSize: 16, color: '#555', margin: '4px 0', textAlign: 'center' }}>
-                  <b>Confidence:</b> {typeof post.confidence === 'number' ? post.confidence : 'N/A'}
-                </div>
-                {post.body && (
-                  <div
-                    style={{
-                      fontSize: 17,
-                      color: '#222',
-                      margin: '16px 0',
-                      whiteSpace: 'pre-line',
-                      background: '#f0f4fa',
-                      borderRadius: 8,
-                      padding: 14,
-                      boxShadow: '0 1px 4px #e0eafc',
-                      textAlign: 'center',
-                      maxWidth: 600,
-                      marginLeft: 'auto',
-                      marginRight: 'auto',
-                    }}
-                  >
-                    {post.body}
-                  </div>
-                )}
+              )}
+              {/* Section 3: Comments, Upvotes, Trending row */}
+              <div style={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 32,
+                width: '100%',
+                margin: '18px 0 0 0',
+                fontSize: 16,
+                color: '#888',
+              }}>
+                <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                  <FaRegComment style={{ fontSize: 17, marginRight: 4 }} />
+                  {post.num_comments ?? 'N/A'} <span style={{marginLeft: 4}}>Comments</span>
+                </span>
+                <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                  <FaArrowUp style={{ color: '#6cbe6c', fontSize: 17, marginRight: 4 }} />
+                  {post.score} <span style={{marginLeft: 4}}>Upvotes</span>
+                </span>
+                <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                  <FaChartLine style={{ color: '#b85c00', fontSize: 17, marginRight: 4 }} /> Trending
+                </span>
+              </div>
+              {/* Section 4: Generate Reply button */}
+              <div style={{ width: '100%', display: 'flex', justifyContent: 'center', margin: '18px 0 0 0' }}>
                 <button
                   style={{
                     padding: '10px 22px',
                     fontSize: 16,
                     borderRadius: 8,
-                    marginTop: 10,
                     cursor: 'pointer',
                     background: 'linear-gradient(90deg, #2193b0 0%, #6dd5ed 100%)',
                     color: '#fff',
@@ -283,27 +298,45 @@ function GetPosts() {
                     boxShadow: '0 2px 8px #b6c6e0',
                     letterSpacing: 1,
                     transition: 'background 0.2s',
+                    minWidth: 180,
+                    position: 'relative',
                   }}
                   onClick={() => handleGenerateReply(post.title, post.body, idx)}
                   disabled={replyLoading[idx]}
                 >
-                  {replyLoading[idx] ? 'Generating...' : 'Generate Reply'}
+                  {replyLoading[idx] ? (
+                    <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
+                      <span className="loader" style={{ width: 18, height: 18, border: '3px solid #fff', borderTop: '3px solid #2193b0', borderRadius: '50%', display: 'inline-block', animation: 'spin 1s linear infinite' }} />
+                      Generating...
+                    </span>
+                  ) : 'Generate Reply'}
                 </button>
-                {replies[idx] && (
-                  <div
-                    style={{
-                      marginTop: 16,
-                      background: 'linear-gradient(120deg, #e0eafc 0%, #f8fbff 100%)',
-                      padding: 16,
-                      borderRadius: 8,
-                      color: '#333',
-                      fontSize: 16,
-                      boxShadow: '0 1px 4px #e0eafc',
-                    }}
-                  >
-                    <b>Reply:</b> {replies[idx]}
-                  </div>
-                )}
+              </div>
+              {/* Section 5: AI reply text box, full width */}
+              <div style={{
+                width: '100%',
+                margin: '18px 0 0 0',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+                <textarea
+                  value={replies[idx] || ''}
+                  placeholder="click Generate Reply for AI response"
+                  readOnly
+                  style={{
+                    width: '100%',
+                    minHeight: 60,
+                    fontSize: 16,
+                    borderRadius: 8,
+                    border: '1.5px solid #b6c6e0',
+                    background: '#f8fbff',
+                    padding: 14,
+                    resize: 'vertical',
+                    boxSizing: 'border-box',
+                    color: '#333',
+                  }}
+                />
               </div>
             </li>
           ))}
@@ -314,3 +347,10 @@ function GetPosts() {
 }
 
 export default GetPosts;
+
+/* Add this to your CSS or in a <style> tag for the spinner:
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+*/
