@@ -182,18 +182,20 @@ function GetPosts() {
                 textAlign: "center",
                 border: '1.5px solid #cfdef3',
                 transition: 'box-shadow 0.2s',
-                width: 600,
-                maxWidth: '90vw',
+                width: 'calc(100vw - 80px)',
+                maxWidth: 1600,
                 minWidth: 320,
                 display: 'flex',
                 flexDirection: 'row',
                 alignItems: 'flex-start',
+                marginLeft: 'auto',
+                marginRight: 'auto',
               }}
             >
               {/* Subreddit box on the left */}
               <div style={{
-                minWidth: 110,
-                maxWidth: 110,
+                minWidth: 130,
+                maxWidth: 130,
                 marginRight: 24,
                 display: 'flex',
                 flexDirection: 'column',
@@ -212,7 +214,7 @@ function GetPosts() {
                   wordBreak: 'break-word',
                   boxShadow: '0 1px 4px #f8d9b6',
                 }}>
-                  {post.subreddit}
+                  {`r/${post.subreddit}`}
                 </div>
                 <div style={{ fontSize: 14, color: '#888', marginTop: 2, textAlign: 'left' }}>
                   <b>Comments:</b> {post.num_comments ?? 'N/A'}
