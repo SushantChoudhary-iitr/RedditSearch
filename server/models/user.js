@@ -11,6 +11,7 @@ const userSchema = new mongoose.Schema({
   tone: String,
   targetAudience: String,
   ketSolutionProduct: String,
+  coreProblems: String,
   notableResults: String,
   industry: String,
   createdAt: { type: Date, default: Date.now }

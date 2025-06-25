@@ -310,7 +310,7 @@ Stay natural. Avoid sounding like a pitch.
 
 
   router.post("/save-user-info", async (req, res) => {
-    const { name, brandname, brandDescription, tone, industry, redditUsername, targetAudience, keySolution, notableResults, coreProblems  } = req.body;
+    const { name, brandname, brandDescription, industry, redditUsername, targetAudience, keySolution, notableResults, coreProblems  } = req.body;
     console.log(`brandname ${brandname}`);
   
     try {
@@ -321,7 +321,7 @@ Stay natural. Avoid sounding like a pitch.
     
       const updatedUser = await User.findOneAndUpdate(
         { redditUsername }, // Find by redditUsername
-        { name, brandname, brandDescription, tone, industry }, // Fields to update
+        { name, brandname, brandDescription, tone, industry, targetAudience, keySolution, notableResults, coreProblems }, // Fields to update
         { new: true, upsert: true } // Return updated doc, create if not exists
       );
     
