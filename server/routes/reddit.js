@@ -129,17 +129,6 @@ async function fetchPostsWithAuth(keywords, relevantSubreddits) {
         const totalWords = allText.split(/\s+/).length || 1; // avoid division by 0
         const confidence = +(hitCount / totalWords).toFixed(3);
 
-        /*if(confidence > 0){
-          return {
-            title,
-            url: `https://reddit.com${p.data.permalink}`,
-            score: p.data.score,
-            subreddit: p.data.subreddit,
-            body,
-            created_utc: p.data.created_utc,
-            confidence
-          };
-        }*/
 
           console.log(`subreddit: ${p.data.subreddit}`);
           return {
@@ -153,9 +142,6 @@ async function fetchPostsWithAuth(keywords, relevantSubreddits) {
             confidence
           };
       });
-
-      //Sort based on "score" upvotes
-      posts.sort((a, b) => b.score - a.score);
 
       allResults.push(...posts);
 
@@ -202,8 +188,6 @@ async function fetchPostsWithAuth(keywords, relevantSubreddits) {
           };
         });
 
-        //Sort based on "score" upvotes
-      posts.sort((a, b) => b.score - a.score);
 
         allResults.push(...retryPosts);
       } else {
@@ -211,6 +195,9 @@ async function fetchPostsWithAuth(keywords, relevantSubreddits) {
       }
     }
   }
+
+  //Sort based on "score" upvotes
+  allResults.sort((a, b) => b.score - a.score);
 
   return allResults;
 }
