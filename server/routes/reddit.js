@@ -108,9 +108,9 @@ async function fetchPostsWithAuth(keywords, relevantSubreddits) {
         headers,
         params: {
           q: keyword,
-          sort: "top",
+          sort: "hot",
           t: "month",
-          limit: 5,
+          limit: 10,
           restrict_sr: true
         }
       });
@@ -155,9 +155,9 @@ async function fetchPostsWithAuth(keywords, relevantSubreddits) {
           headers,
           params: {
             q: keyword,
-            sort: "top",
+            sort: "hot",
             t: "month",
-            limit: 5,
+            limit: 10,
             restrict_sr: true
           }
         });
