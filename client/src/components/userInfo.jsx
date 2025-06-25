@@ -6,7 +6,10 @@ function UserInfo() {
     name: "",
     brandname: "",
     brandDescription: "",
-    tone: "",
+    targetAudience: "",
+    coreProblems: "",
+    keySolution: "",
+    notableResults: "",
     industry: ""
   });
   const [loading, setLoading] = useState(false);
@@ -91,7 +94,10 @@ function UserInfo() {
         <input name="name" value={form.name} onChange={handleChange} placeholder="Name" required style={inputStyle} />
         <input name="brandname" value={form.brandname} onChange={handleChange} placeholder="Brand Name" required style={inputStyle} />
         <input name="brandDescription" value={form.brandDescription} onChange={handleChange} placeholder="Brand Description" required style={inputStyle} />
-        <input name="tone" value={form.tone} onChange={handleChange} placeholder="Tone" required style={inputStyle} />
+        <input name="targetAudience" value={form.targetAudience} onChange={handleChange} placeholder="Target Audience" required style={inputStyle} />
+        <input name="coreProblems" value={form.coreProblems} onChange={handleChange} placeholder="Core Problems Addresed" required style={inputStyle} />
+        <input name="keySolution" value={form.keySolution} onChange={handleChange} placeholder="Key Solution/Product" required style={inputStyle} />
+        <input name="notableResults" value={form.notableResults} onChange={handleChange} placeholder="Notable Results/Past Clients" required style={inputStyle} />
         <input name="industry" value={form.industry} onChange={handleChange} placeholder="Industry" required style={inputStyle} />
         <button type="submit" disabled={loading} style={{
           padding: '12px 0',

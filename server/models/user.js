@@ -9,6 +9,9 @@ const userSchema = new mongoose.Schema({
   brandname: String,
   brandDescription: String,
   tone: String,
+  targetAudience: String,
+  ketSolutionProduct: String,
+  notableResults: String,
   industry: String,
   createdAt: { type: Date, default: Date.now }
 });

@@ -262,19 +262,30 @@ router.get("/posts", async (req, res) => {
 
     console.log(`brandname: ${brandname}, brandDesription ${brandDescription}, tone: ${tone}, industry: ${industry}`);
 
-    const systemPrompt = `You're a helpful Reddit user who is also a founder of a startup. You want to respond to the following post in a way that:
-  - genuinely helps the original poster
-  - is conversational, not too formal
-  - subtly introduces your product or value proposition, if relevant`;
+    const systemPrompt = `You are acting as the marketing lead of ${brandname}, a ${brandDescription}.
+
+You help your target audience (${targetAudience}) solve ${coreProblems} using ${keySolution}. You've worked with ${notableResults}, so you know what actually works in the real world.
+
+You're replying to Reddit threads with the goal of being genuinely helpful and insightful. Your secondary goal is to subtly showcase your experience and brand without being promotional.
+
+Tone: Friendly, sharp, conversational—like an experienced founder or growth marketer sharing real advice. No fluff, no jargon, no hard selling, no unnecessary links.
+
+Avoid: Marketing buzzwords, overexplaining, clichés, or sounding like you're pitching something. Reddit users value authenticity.`;
   
     const userPrompt = `
-  Here are some detail about the user
-  brandname: ${brandname}, brandDesription ${brandDescription}, tone: ${tone}, industry: ${industry}.
-  
-  Reddit Post:
-  Title: ${title}
-  Body: ${body || "(no body text)"}
-  
+  Write a thoughtful Reddit comment replying to the following thread:
+
+Title: ${title}
+Body: ${body || "(no body text)"}
+
+Structure:
+- Start by validating or empathizing with the OP's challenge
+- Share 1-2 practical, non-obvious insights or tactics
+- Casually reference your brand or experience (only if relevant)
+- End helpfully: e.g., “happy to expand if helpful” or “can share more on this if you're curious".
+
+Stay natural. Avoid sounding like a pitch.
+
   Your reply:
   `;
   
@@ -299,7 +310,7 @@ router.get("/posts", async (req, res) => {
 
 
   router.post("/save-user-info", async (req, res) => {
-    const { name, brandname, brandDescription, tone, industry, redditUsername } = req.body;
+    const { name, brandname, brandDescription, tone, industry, redditUsername, targetAudience, keySolution, notableResults, coreProblems  } = req.body;
     console.log(`brandname ${brandname}`);
   
     try {
