@@ -110,7 +110,7 @@ async function fetchPostsWithAuth(keywords, relevantSubreddits) {
           q: keyword,
           sort: "top",
           t: "month",
-          limit: 3,
+          limit: 5,
           restrict_sr: true
         }
       });
@@ -130,7 +130,8 @@ async function fetchPostsWithAuth(keywords, relevantSubreddits) {
         const confidence = +(hitCount / totalWords).toFixed(3);
 
 
-          console.log(`subreddit: ${p.data.subreddit}`);
+          if(confidence > 0){
+            console.log(`subreddit: ${p.data.subreddit}`);
           return {
             title,
             url: `https://reddit.com${p.data.permalink}`,
@@ -141,6 +142,7 @@ async function fetchPostsWithAuth(keywords, relevantSubreddits) {
             num_comments: p.data.num_comments,
             confidence
           };
+          }
       });
 
       allResults.push(...posts);
@@ -158,7 +160,7 @@ async function fetchPostsWithAuth(keywords, relevantSubreddits) {
             q: keyword,
             sort: "top",
             t: "month",
-            limit: 3,
+            limit: 5,
             restrict_sr: true
           }
         });
@@ -177,16 +179,18 @@ async function fetchPostsWithAuth(keywords, relevantSubreddits) {
           const totalWords = allText.split(/\s+/).length || 1;
           const confidence = +(hitCount / totalWords).toFixed(3);
 
-          return {
-            title,
-            url: `https://reddit.com${p.data.permalink}`,
-            score: p.data.score,
-            subreddit: p.data.subreddit,
-            body,
-            created_utc: p.data.created_utc,
-            num_comments: p.data.num_comments,
-            confidence
-          };
+          if(confidence > 0){
+            return {
+              title,
+              url: `https://reddit.com${p.data.permalink}`,
+              score: p.data.score,
+              subreddit: p.data.subreddit,
+              body,
+              created_utc: p.data.created_utc,
+              num_comments: p.data.num_comments,
+              confidence
+            };
+          }
         });
 
 
