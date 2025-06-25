@@ -21,7 +21,11 @@ function UserInfo() {
   useEffect(() => {
     const redditUsername = localStorage.getItem("redditUsername");
     if (!redditUsername) return;
-    fetch(`https://redditsearch-5irh.onrender.com/get-user-info?redditUsername=${redditUsername}`)
+    fetch("https://redditsearch-5irh.onrender.com/get-user-info", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ redditUsername })
+    })
       .then(res => res.json())
       .then(data => {
         setForm({
