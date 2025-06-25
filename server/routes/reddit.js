@@ -129,9 +129,7 @@ async function fetchPostsWithAuth(keywords, relevantSubreddits) {
         const totalWords = allText.split(/\s+/).length || 1; // avoid division by 0
         const confidence = +(hitCount / totalWords).toFixed(3);
 
-
-          if(confidence > 0){
-            console.log(`subreddit: ${p.data.subreddit}`);
+        console.log(`subreddit: ${p.data.subreddit}`);
           return {
             title,
             url: `https://reddit.com${p.data.permalink}`,
@@ -142,11 +140,7 @@ async function fetchPostsWithAuth(keywords, relevantSubreddits) {
             num_comments: p.data.num_comments,
             confidence
           };
-          }
-          else{
-            return [];
-          }
-      });
+      }).filter(post => post.confidence > 0);
 
       allResults.push(...posts);
 
@@ -182,7 +176,6 @@ async function fetchPostsWithAuth(keywords, relevantSubreddits) {
           const totalWords = allText.split(/\s+/).length || 1;
           const confidence = +(hitCount / totalWords).toFixed(3);
 
-          if(confidence > 0){
             return {
               title,
               url: `https://reddit.com${p.data.permalink}`,
@@ -193,8 +186,7 @@ async function fetchPostsWithAuth(keywords, relevantSubreddits) {
               num_comments: p.data.num_comments,
               confidence
             };
-          }
-        });
+        }).filter(post => post.confidence > 0);
 
 
         allResults.push(...retryPosts);
