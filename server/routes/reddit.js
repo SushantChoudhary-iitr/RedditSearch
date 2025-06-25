@@ -154,6 +154,9 @@ async function fetchPostsWithAuth(keywords, relevantSubreddits) {
           };
       });
 
+      //Sort based on "score" upvotes
+      posts.sort((a, b) => b.score - a.score);
+
       allResults.push(...posts);
 
     } catch (err) {
@@ -198,6 +201,9 @@ async function fetchPostsWithAuth(keywords, relevantSubreddits) {
             confidence
           };
         });
+
+        //Sort based on "score" upvotes
+      posts.sort((a, b) => b.score - a.score);
 
         allResults.push(...retryPosts);
       } else {
