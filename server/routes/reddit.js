@@ -253,13 +253,13 @@ router.get("/posts", async (req, res) => {
     }
 
     const currentUser = await User.findOne({redditUsername : redditUsername});
-    const{brandname, brandDescription, industry, keySolution, targetAudience, coreProblems, notableResults, additionalPrompt} = currentUser;
+    const{brandname, brandDescription, industry, keySolutionProduct, targetAudience, coreProblems, notableResults, additionalPrompt} = currentUser;
 
     console.log(`brandname: ${brandname}, brandDesription ${brandDescription}, industry: ${industry}`);
 
     const systemPrompt = `You are acting as the marketing lead of ${brandname}, a ${brandDescription}.
 
-You help your target audience (${targetAudience}) solve ${coreProblems} using ${keySolution}. You've worked with ${notableResults}, so you know what actually works in the real world.
+You help your target audience (${targetAudience}) solve ${coreProblems} using ${keySolutionProduct}. You've worked with ${notableResults}, so you know what actually works in the real world.
 
 You're replying to Reddit threads with the goal of being genuinely helpful and insightful. Your secondary goal is to subtly showcase your experience and brand without being promotional.
 
@@ -307,7 +307,7 @@ Stay natural. Avoid sounding like a pitch.
 
 
   router.post("/save-user-info", async (req, res) => {
-    const { name, brandname, brandDescription, redditUsername, targetAudience, keySolution, notableResults, coreProblems, additionalPrompt  } = req.body;
+    const { name, brandname, brandDescription, redditUsername, targetAudience, keySolutionProduct, notableResults, coreProblems, additionalPrompt  } = req.body;
     console.log(`brandname ${brandname}`);
   
     try {
@@ -318,7 +318,7 @@ Stay natural. Avoid sounding like a pitch.
     
       const updatedUser = await User.findOneAndUpdate(
         { redditUsername }, // Find by redditUsername
-        { name, brandname, brandDescription, targetAudience, keySolution, notableResults, coreProblems, additionalPrompt }, // Fields to update
+        { name, brandname, brandDescription, targetAudience, keySolutionProduct, notableResults, coreProblems, additionalPrompt }, // Fields to update
         { new: true, upsert: true } // Return updated doc, create if not exists
       );
     
@@ -348,10 +348,10 @@ Stay natural. Avoid sounding like a pitch.
       // Send only selected fields
       const {
         name,
-        brandName,
+        brandname,
         brandDescription,
         targetAudience,
-        keySolution,
+        keySolutionProduct,
         coreProblems,
         notableResults,
         additionalPrompt
@@ -359,10 +359,10 @@ Stay natural. Avoid sounding like a pitch.
   
       res.json({
         name,
-        brandName,
+        brandname,
         brandDescription,
         targetAudience,
-        keySolution,
+        keySolutionProduct,
         coreProblems,
         notableResults,
         additionalPrompt

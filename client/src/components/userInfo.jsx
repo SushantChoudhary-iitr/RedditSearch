@@ -8,7 +8,7 @@ function UserInfo() {
     brandDescription: "",
     targetAudience: "",
     coreProblems: "",
-    keySolution: "",
+    keySolutionProduct: "",
     notableResults: "",
     additionalPrompt: ""
   });
@@ -34,7 +34,7 @@ function UserInfo() {
           brandDescription: data.brandDescription || "",
           targetAudience: data.targetAudience || "",
           coreProblems: data.coreProblems || "",
-          keySolution: data.keySolution || "",
+          keySolutionProduct: data.keySolutionProduct || "",
           notableResults: data.notableResults || "",
           additionalPrompt: data.additionalPrompt || ""
         });
@@ -127,7 +127,7 @@ function UserInfo() {
         <label style={labelStyle}>Core Problems Addressed</label>
         <input name="coreProblems" value={form.coreProblems} onChange={handleChange} placeholder="Core Problems Addressed" required style={inputStyle} />
         <label style={labelStyle}>Key Solution/Product</label>
-        <input name="keySolution" value={form.keySolution} onChange={handleChange} placeholder="Key Solution/Product" required style={inputStyle} />
+        <input name="keySolutionProduct" value={form.keySolutionProduct} onChange={handleChange} placeholder="Key Solution/Product" required style={inputStyle} />
         <label style={labelStyle}>Notable Results/Past Clients</label>
         <input name="notableResults" value={form.notableResults} onChange={handleChange} placeholder="Notable Results/Past Clients" required style={inputStyle} />
         <label style={labelStyle}>Additional Prompt</label>
