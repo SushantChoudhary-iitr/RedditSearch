@@ -197,7 +197,7 @@ async function fetchPostsWithAuth(keywords, relevantSubreddits) {
   }
 
   //Sort based on "score" upvotes
-  allResults.sort((a, b) => b.score - a.score);
+  //allResults.sort((a, b) => b.score - a.score);
 
   return allResults;
 }
