@@ -143,6 +143,9 @@ async function fetchPostsWithAuth(keywords, relevantSubreddits) {
             confidence
           };
           }
+          else{
+            return [];
+          }
       });
 
       allResults.push(...posts);
