@@ -8,7 +8,6 @@ const userSchema = new mongoose.Schema({
   name: String,
   brandname: String,
   brandDescription: String,
-  tone: String,
   targetAudience: String,
   ketSolutionProduct: String,
   coreProblems: String,
