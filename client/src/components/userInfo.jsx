@@ -10,7 +10,7 @@ function UserInfo() {
     coreProblems: "",
     keySolution: "",
     notableResults: "",
-    industry: ""
+    additionalPrompt: ""
   });
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState("");
@@ -98,7 +98,7 @@ function UserInfo() {
         <input name="coreProblems" value={form.coreProblems} onChange={handleChange} placeholder="Core Problems Addresed" required style={inputStyle} />
         <input name="keySolution" value={form.keySolution} onChange={handleChange} placeholder="Key Solution/Product" required style={inputStyle} />
         <input name="notableResults" value={form.notableResults} onChange={handleChange} placeholder="Notable Results/Past Clients" required style={inputStyle} />
-        <input name="industry" value={form.industry} onChange={handleChange} placeholder="Industry" required style={inputStyle} />
+        <input name="additionalPrompt" value={form.additionalPrompt} onChange={handleChange} placeholder="Enter any additional prompt you would like AI to incorporate" required style={inputStyle} />
         <button type="submit" disabled={loading} style={{
           padding: '12px 0',
           fontSize: 16,

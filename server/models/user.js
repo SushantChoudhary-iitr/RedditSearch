@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema({
   ketSolutionProduct: String,
   coreProblems: String,
   notableResults: String,
-  industry: String,
+  additionalPrompt: String,
   createdAt: { type: Date, default: Date.now }
 });
 

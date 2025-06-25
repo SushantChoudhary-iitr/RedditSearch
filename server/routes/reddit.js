@@ -251,7 +251,7 @@ router.get("/posts", async (req, res) => {
     }
 
     const currentUser = await User.findOne({redditUsername : redditUsername});
-    const{brandname, brandDescription, industry, keySolution, targetAudience, coreProblems, notableResults} = currentUser;
+    const{brandname, brandDescription, industry, keySolution, targetAudience, coreProblems, notableResults, additionalPrompt} = currentUser;
 
     console.log(`brandname: ${brandname}, brandDesription ${brandDescription}, industry: ${industry}`);
 
@@ -262,6 +262,8 @@ You help your target audience (${targetAudience}) solve ${coreProblems} using ${
 You're replying to Reddit threads with the goal of being genuinely helpful and insightful. Your secondary goal is to subtly showcase your experience and brand without being promotional.
 
 Tone: Friendly, sharp, conversational—like an experienced founder or growth marketer sharing real advice. No fluff, no jargon, no hard selling, no unnecessary links.
+
+Additional Prompt: ${additionalPrompt}.
 
 Avoid: Marketing buzzwords, overexplaining, clichés, or sounding like you're pitching something. Reddit users value authenticity.`;
   
@@ -303,7 +305,7 @@ Stay natural. Avoid sounding like a pitch.
 
 
   router.post("/save-user-info", async (req, res) => {
-    const { name, brandname, brandDescription, industry, redditUsername, targetAudience, keySolution, notableResults, coreProblems  } = req.body;
+    const { name, brandname, brandDescription, redditUsername, targetAudience, keySolution, notableResults, coreProblems, additionalPrompt  } = req.body;
     console.log(`brandname ${brandname}`);
   
     try {
@@ -314,7 +316,7 @@ Stay natural. Avoid sounding like a pitch.
     
       const updatedUser = await User.findOneAndUpdate(
         { redditUsername }, // Find by redditUsername
-        { name, brandname, brandDescription, industry, targetAudience, keySolution, notableResults, coreProblems }, // Fields to update
+        { name, brandname, brandDescription, targetAudience, keySolution, notableResults, coreProblems, additionalPrompt }, // Fields to update
         { new: true, upsert: true } // Return updated doc, create if not exists
       );
     
