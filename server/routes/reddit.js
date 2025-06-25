@@ -258,9 +258,9 @@ router.get("/posts", async (req, res) => {
     }
 
     const currentUser = await User.findOne({redditUsername : redditUsername});
-    const{brandname, brandDescription, tone, industry} = currentUser;
+    const{brandname, brandDescription, industry, keySolution, targetAudience, coreProblems, notableResults} = currentUser;
 
-    console.log(`brandname: ${brandname}, brandDesription ${brandDescription}, tone: ${tone}, industry: ${industry}`);
+    console.log(`brandname: ${brandname}, brandDesription ${brandDescription}, industry: ${industry}`);
 
     const systemPrompt = `You are acting as the marketing lead of ${brandname}, a ${brandDescription}.
 
