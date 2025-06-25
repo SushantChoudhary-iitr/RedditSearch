@@ -108,8 +108,8 @@ async function fetchPostsWithAuth(keywords, relevantSubreddits) {
         headers,
         params: {
           q: keyword,
-          sort: "hot",
-          t: "week",
+          sort: "top",
+          t: "month",
           limit: 3,
           restrict_sr: true
         }
@@ -156,7 +156,8 @@ async function fetchPostsWithAuth(keywords, relevantSubreddits) {
           headers,
           params: {
             q: keyword,
-            sort: "new",
+            sort: "top",
+            t: "month",
             limit: 3,
             restrict_sr: true
           }
