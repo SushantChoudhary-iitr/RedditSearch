@@ -184,7 +184,7 @@ function GetPosts() {
                 border: '1.5px solid #cfdef3',
                 transition: 'box-shadow 0.2s',
                 width: '100%',
-                maxWidth: 1100,
+                maxWidth: 1300,
                 minWidth: 320,
                 display: 'flex',
                 flexDirection: 'column',
@@ -220,21 +220,21 @@ function GetPosts() {
                 }}>
                   {`r/${post.subreddit}`}
                 </div>
-                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-                  <div style={{ fontSize: 22, fontWeight: 700, color: '#2d3a4b', textAlign: 'center' }}>
+                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'center' }}>
+                  <div style={{ fontSize: 22, fontWeight: 700, color: '#2d3a4b', textAlign: 'left' }}>
                     <a
                       href={post.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      style={{ color: '#0079d3', textDecoration: 'none', wordBreak: 'break-word' }}
+                      style={{ color: '#0079d3', textDecoration: 'none', wordBreak: 'break-word', textAlign: 'left' }}
                     >
                       {post.title}
                     </a>
                   </div>
-                  <div style={{ fontSize: 16, color: '#555', margin: '2px 0', textAlign: 'center' }}>
+                  <div style={{ fontSize: 16, color: '#555', margin: '2px 0', textAlign: 'left' }}>
                     <b>Created:</b> {post.created_utc ? new Date(post.created_utc * 1000).toLocaleString() : 'N/A'}
                   </div>
-                  <div style={{ fontSize: 16, color: '#555', margin: '2px 0', textAlign: 'center' }}>
+                  <div style={{ fontSize: 16, color: '#555', margin: '2px 0', textAlign: 'left' }}>
                     <b>Confidence:</b> {typeof post.confidence === 'number' ? post.confidence : 'N/A'}
                   </div>
                 </div>
@@ -249,9 +249,9 @@ function GetPosts() {
                     whiteSpace: 'pre-line',
                     background: '#f0f4fa',
                     borderRadius: 8,
-                    padding: '18px 24px',
+                    padding: '18px 32px',
                     boxShadow: '0 1px 4px #e0eafc',
-                    textAlign: 'center',
+                    textAlign: 'left',
                     width: '100%',
                     boxSizing: 'border-box',
                   }}

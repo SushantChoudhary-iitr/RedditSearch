@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 function UserInfo() {
@@ -16,6 +16,27 @@ function UserInfo() {
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
   const location = useLocation();
+
+  // Fetch user info from backend on mount
+  useEffect(() => {
+    const redditUsername = localStorage.getItem("redditUsername");
+    if (!redditUsername) return;
+    fetch(`https://redditsearch-5irh.onrender.com/get-user-info?redditUsername=${redditUsername}`)
+      .then(res => res.json())
+      .then(data => {
+        setForm({
+          name: data.name || "",
+          brandname: data.brandName || "",
+          brandDescription: data.brandDescription || "",
+          targetAudience: data.targetAudience || "",
+          coreProblems: data.coreProblems || "",
+          keySolution: data.keySolution || "",
+          notableResults: data.notableResults || "",
+          additionalPrompt: data.additionalPrompt || ""
+        });
+      })
+      .catch(() => {});
+  }, []);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -91,13 +112,21 @@ function UserInfo() {
         marginTop: 10
       }}>
         <h2 style={{ color: '#2d3a4b', marginBottom: 12, textAlign: 'center' }}>User Info</h2>
+        <label style={labelStyle}>Name</label>
         <input name="name" value={form.name} onChange={handleChange} placeholder="Name" required style={inputStyle} />
+        <label style={labelStyle}>Brand Name</label>
         <input name="brandname" value={form.brandname} onChange={handleChange} placeholder="Brand Name" required style={inputStyle} />
+        <label style={labelStyle}>Brand Description</label>
         <input name="brandDescription" value={form.brandDescription} onChange={handleChange} placeholder="Brand Description" required style={inputStyle} />
+        <label style={labelStyle}>Target Audience</label>
         <input name="targetAudience" value={form.targetAudience} onChange={handleChange} placeholder="Target Audience" required style={inputStyle} />
-        <input name="coreProblems" value={form.coreProblems} onChange={handleChange} placeholder="Core Problems Addresed" required style={inputStyle} />
+        <label style={labelStyle}>Core Problems Addressed</label>
+        <input name="coreProblems" value={form.coreProblems} onChange={handleChange} placeholder="Core Problems Addressed" required style={inputStyle} />
+        <label style={labelStyle}>Key Solution/Product</label>
         <input name="keySolution" value={form.keySolution} onChange={handleChange} placeholder="Key Solution/Product" required style={inputStyle} />
+        <label style={labelStyle}>Notable Results/Past Clients</label>
         <input name="notableResults" value={form.notableResults} onChange={handleChange} placeholder="Notable Results/Past Clients" required style={inputStyle} />
+        <label style={labelStyle}>Additional Prompt</label>
         <input name="additionalPrompt" value={form.additionalPrompt} onChange={handleChange} placeholder="Enter any additional prompt you would like AI to incorporate" required style={inputStyle} />
         <button type="submit" disabled={loading} style={{
           padding: '12px 0',
@@ -130,6 +159,15 @@ const inputStyle = {
   width: '100%',
   maxWidth: 340,
   boxSizing: 'border-box',
+};
+
+const labelStyle = {
+  alignSelf: 'flex-start',
+  fontWeight: 600,
+  color: '#2d3a4b',
+  marginBottom: 2,
+  marginTop: 8,
+  fontSize: 15
 };
 
 export default UserInfo;

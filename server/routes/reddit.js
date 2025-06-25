@@ -331,6 +331,50 @@ Stay natural. Avoid sounding like a pitch.
   });
 
 
+  router.post("/get-user-info", async (req, res) => {
+    const { redditUsername } = req.body;
+  
+    if (!redditUsername) {
+      return res.status(400).json({ error: "redditUsername is required" });
+    }
+  
+    try {
+      const user = await User.findOne({ redditUsername });
+  
+      if (!user) {
+        return res.status(404).json({ error: "User not found" });
+      }
+  
+      // Send only selected fields
+      const {
+        name,
+        brandName,
+        brandDescription,
+        targetAudience,
+        keySolution,
+        coreProblems,
+        notableResults,
+        additionalPrompt
+      } = user;
+  
+      res.json({
+        name,
+        brandName,
+        brandDescription,
+        targetAudience,
+        keySolution,
+        coreProblems,
+        notableResults,
+        additionalPrompt
+      });
+  
+    } catch (err) {
+      console.error("Error fetching user info:", err);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
+
 /*
 router.get("/posts", async (req, res) => {
   if (!savedToken) return res.status(401).send("Not Authenticated");
