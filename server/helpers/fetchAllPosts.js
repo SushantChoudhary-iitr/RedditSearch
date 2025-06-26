@@ -48,7 +48,9 @@ async function fetchAllPosts(keywords, savedAccessToken, savedRefreshToken) {
               num_comments: p.data.num_comments,
               confidence
             };
-        }).filter(post => post.confidence > 0);
+        });
+
+        //.filter(post => post.confidence > 0)
   
         allResults.push(...posts);
   
@@ -94,7 +96,7 @@ async function fetchAllPosts(keywords, savedAccessToken, savedRefreshToken) {
                 num_comments: p.data.num_comments,
                 confidence
               };
-          }).filter(post => post.confidence > 0);
+          });
   
   
           allResults.push(...retryPosts);
