@@ -9,7 +9,7 @@ async function fetchAllPosts(keywords, relevantSubreddits, savedAccessToken, sav
   
     //const subredditQuery = relevantSubreddits.join("+");
     let allKeywordsResults = [];
-    let allSubredditResults = [];
+    let allSubredditsResults = [];
   
     //Search By Keywords
     for (const keyword of keywords) {
