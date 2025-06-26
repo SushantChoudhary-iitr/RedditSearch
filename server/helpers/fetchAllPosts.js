@@ -7,7 +7,7 @@ async function fetchAllPosts(keywords, relevantSubreddits, savedAccessToken, sav
       "User-Agent": process.env.USER_AGENT
     };
   
-    //const subredditQuery = relevantSubreddits.join("+");
+    const subredditQuery = relevantSubreddits.join("+");
     let allKeywordsResults = [];
     let allSubredditsResults = [];
   
@@ -211,7 +211,7 @@ async function fetchAllPosts(keywords, relevantSubreddits, savedAccessToken, sav
     allKeywordsResults.sort((a, b) => b.score - a.score);
     allSubredditResults.sort((a,b) => b.score - a.score);
 
-    const allResults = [...allSubredditPosts, ...allKeywordPosts];
+    const allResults = [...allSubredditsPosts, ...allKeywordPosts];
   
     console.log("allResults sorted");
   
