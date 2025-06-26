@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
-import { FaArrowUp, FaRegComment, FaChartLine } from "react-icons/fa";
+import { FaArrowUp, FaRegComment, FaChartLine, FaRegCopy } from "react-icons/fa";
 
 function GetPosts() {
   const [keywords, setKeywords] = useState("");
@@ -12,6 +12,7 @@ function GetPosts() {
   const [redditUsername, setRedditUsername] = useState("");
   const location = useLocation();
   const navigate = useNavigate();
+  const [copiedIdx, setCopiedIdx] = useState(null);
 
   useEffect(() => {
     // Check for ?user=... in the URL
@@ -73,6 +74,20 @@ function GetPosts() {
       setReplies((prev) => ({ ...prev, [idx]: err.message || "Failed to generate reply" }));
     }
     setReplyLoading((prev) => ({ ...prev, [idx]: false }));
+  };
+
+  // Make replies editable by the user
+  const handleReplyChange = (idx, value) => {
+    setReplies(prev => ({ ...prev, [idx]: value }));
+  };
+
+  // Copy reply to clipboard
+  const handleCopy = (idx) => {
+    if (replies[idx]) {
+      navigator.clipboard.writeText(replies[idx]);
+      setCopiedIdx(idx);
+      setTimeout(() => setCopiedIdx(null), 1200);
+    }
   };
 
   // Tab styles
@@ -312,18 +327,34 @@ function GetPosts() {
                   ) : 'Generate Reply'}
                 </button>
               </div>
-              {/* Section 5: AI reply text box, full width */}
+              {/* Section 5: AI reply text box, full width, editable, with copy icon */}
               <div style={{
                 width: '100%',
                 margin: '18px 0 0 0',
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
+                position: 'relative',
               }}>
+                {/* Copy icon */}
+                <FaRegCopy
+                  onClick={() => handleCopy(idx)}
+                  style={{
+                    position: 'absolute',
+                    top: 10,
+                    right: 18,
+                    fontSize: 20,
+                    color: copiedIdx === idx ? '#2193b0' : '#888',
+                    cursor: 'pointer',
+                    zIndex: 2,
+                    transition: 'color 0.2s',
+                  }}
+                  title={copiedIdx === idx ? 'Copied!' : 'Copy to clipboard'}
+                />
                 <textarea
                   value={replies[idx] || ''}
                   placeholder="click Generate Reply for AI response"
-                  readOnly
+                  onChange={e => handleReplyChange(idx, e.target.value)}
                   style={{
                     width: '100%',
                     minHeight: 90,
@@ -340,6 +371,23 @@ function GetPosts() {
                     color: '#333',
                   }}
                 />
+                {copiedIdx === idx && (
+                  <span style={{
+                    position: 'absolute',
+                    top: 10,
+                    right: 48,
+                    background: '#e0eafc',
+                    color: '#2193b0',
+                    borderRadius: 6,
+                    padding: '2px 10px',
+                    fontSize: 13,
+                    fontWeight: 600,
+                    zIndex: 3,
+                    boxShadow: '0 1px 4px #b6c6e0',
+                  }}>
+                    Copied!
+                  </span>
+                )}
               </div>
             </li>
           ))}
