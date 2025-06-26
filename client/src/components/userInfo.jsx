@@ -30,7 +30,7 @@ function UserInfo() {
       .then(data => {
         setForm({
           name: data.name || "",
-          brandname: data.brandName || "",
+          brandname: data.brandname || "",
           brandDescription: data.brandDescription || "",
           targetAudience: data.targetAudience || "",
           coreProblems: data.coreProblems || "",
