@@ -141,7 +141,9 @@ async function fetchPostsWithAuth(keywords, relevantSubreddits) {
             num_comments: p.data.num_comments,
             confidence
           };
-      }).filter(post => post.confidence > 0);
+      });
+
+      //.filter(post => post.confidence > 0)
 
       allResults.push(...posts);
 
@@ -187,7 +189,9 @@ async function fetchPostsWithAuth(keywords, relevantSubreddits) {
               num_comments: p.data.num_comments,
               confidence
             };
-        }).filter(post => post.confidence > 0);
+        });
+
+        //.filter(post => post.confidence > 0)
 
 
         allResults.push(...retryPosts);
@@ -239,7 +243,7 @@ router.get("/posts", async (req, res) => {
       // Use the helper function to fetch posts for all keywords
 
       //const posts = await fetchPostsWithAuth(keywords, relevantSubreddits);
-      const posts = await fetchAllPosts(keywords);
+      const posts = await fetchAllPosts(keywords, savedAccessToken, savedRefreshToken);
       res.json(posts);
     } catch (err) {
       console.error("Reddit API error:", err.response?.data || err.message);

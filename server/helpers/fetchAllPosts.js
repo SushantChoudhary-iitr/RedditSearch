@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 
-async function fetchAllPosts(keywords) {
+async function fetchAllPosts(keywords, savedAccessToken, savedRefreshToken) {
     let headers = {
       Authorization: `Bearer ${savedAccessToken}`,
       "User-Agent": process.env.USER_AGENT
