@@ -115,9 +115,9 @@ async function fetchAllPosts(keywords, relevantSubreddits, savedAccessToken, sav
           headers,
           params: {
             q: keyword,
-            sort: "hot",
+            sort: "top",
             t: "month",
-            limit: 20,
+            limit: 10,
             restrict_sr: true
           }
         });
@@ -164,9 +164,9 @@ async function fetchAllPosts(keywords, relevantSubreddits, savedAccessToken, sav
             headers,
             params: {
               q: keyword,
-              sort: "hot",
+              sort: "top",
               t: "month",
-              limit: 20,
+              limit: 10,
               restrict_sr: true
             }
           });
