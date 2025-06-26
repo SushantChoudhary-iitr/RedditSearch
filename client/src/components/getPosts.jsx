@@ -91,12 +91,28 @@ function GetPosts() {
     }
   };
 
-  // Helper to truncate body
+  // Helper to truncate body and preserve line breaks and remove **
   const getTruncatedBody = (body, idx) => {
     if (!body) return '';
-    const words = body.split(/\s+/);
-    if (words.length <= 200 || expandedPosts[idx]) return body;
-    return words.slice(0, 200).join(' ') + '...';
+    // Remove all ** for cleaner look
+    const cleanBody = body.replace(/\*\*/g, '');
+    if (expandedPosts[idx]) return cleanBody;
+    // Split by word but preserve line breaks
+    const wordArray = [];
+    let count = 0;
+    cleanBody.split('\n').forEach(line => {
+      const lineWords = line.split(' ');
+      for (let w of lineWords) {
+        if (count < 200) {
+          wordArray.push(w);
+          count++;
+        }
+      }
+      if (count < 200) wordArray.push('\n');
+    });
+    const truncated = wordArray.join(' ').replace(/ +\n/g, '\n').trim();
+    if (cleanBody.split(/\s+/).length <= 200) return cleanBody;
+    return truncated + '...';
   };
 
   const handleToggleExpand = (idx) => {
