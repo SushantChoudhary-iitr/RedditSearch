@@ -16,7 +16,7 @@ async function fetchAllPosts(keywords, savedAccessToken, savedRefreshToken) {
           headers,
           params: {
             q: keyword,
-            sort: "hot",
+            sort: "top",
             t: "month",
             limit: 20,
             restrict_sr: false
@@ -63,7 +63,7 @@ async function fetchAllPosts(keywords, savedAccessToken, savedRefreshToken) {
             headers,
             params: {
               q: keyword,
-              sort: "hot",
+              sort: "top",
               t: "month",
               limit: 20,
               restrict_sr: false
