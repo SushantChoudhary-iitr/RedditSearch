@@ -209,9 +209,9 @@ async function fetchAllPosts(keywords, relevantSubreddits, savedAccessToken, sav
   
     //Sort based on "score" upvotes
     allKeywordsResults.sort((a, b) => b.score - a.score);
-    allSubredditResults.sort((a,b) => b.score - a.score);
+    allSubredditsResults.sort((a,b) => b.score - a.score);
 
-    const allResults = [...allSubredditsPosts, ...allKeywordPosts];
+    const allResults = [...allSubredditsResults, ...allKeywordsResults];
   
     console.log("allResults sorted");
   
