@@ -13,6 +13,7 @@ function GetPosts() {
   const location = useLocation();
   const navigate = useNavigate();
   const [copiedIdx, setCopiedIdx] = useState(null);
+  const [expandedPosts, setExpandedPosts] = useState({});
 
   useEffect(() => {
     // Check for ?user=... in the URL
@@ -88,6 +89,18 @@ function GetPosts() {
       setCopiedIdx(idx);
       setTimeout(() => setCopiedIdx(null), 1200);
     }
+  };
+
+  // Helper to truncate body
+  const getTruncatedBody = (body, idx) => {
+    if (!body) return '';
+    const words = body.split(/\s+/);
+    if (words.length <= 200 || expandedPosts[idx]) return body;
+    return words.slice(0, 200).join(' ') + '...';
+  };
+
+  const handleToggleExpand = (idx) => {
+    setExpandedPosts(prev => ({ ...prev, [idx]: !prev[idx] }));
   };
 
   // Tab styles
@@ -269,9 +282,24 @@ function GetPosts() {
                     textAlign: 'left',
                     width: '100%',
                     boxSizing: 'border-box',
+                    position: 'relative',
                   }}
                 >
-                  {post.body}
+                  {getTruncatedBody(post.body, idx)}
+                  {post.body.split(/\s+/).length > 200 && (
+                    <span
+                      onClick={() => handleToggleExpand(idx)}
+                      style={{
+                        color: '#2193b0',
+                        cursor: 'pointer',
+                        fontWeight: 600,
+                        marginLeft: 8,
+                        userSelect: 'none',
+                      }}
+                    >
+                      {expandedPosts[idx] ? ' show less' : ' read more'}
+                    </span>
+                  )}
                 </div>
               )}
               {/* Section 3: Comments, Upvotes, Trending row */}
