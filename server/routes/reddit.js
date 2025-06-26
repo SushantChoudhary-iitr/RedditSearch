@@ -243,7 +243,7 @@ router.get("/posts", async (req, res) => {
       // Use the helper function to fetch posts for all keywords
 
       //const posts = await fetchPostsWithAuth(keywords, relevantSubreddits);
-      const posts = await fetchAllPosts(keywords, savedAccessToken, savedRefreshToken);
+      const posts = await fetchAllPosts(keywords, relevantSubreddits, savedAccessToken, savedRefreshToken);
       res.json(posts);
     } catch (err) {
       console.error("Reddit API error:", err.response?.data || err.message);
