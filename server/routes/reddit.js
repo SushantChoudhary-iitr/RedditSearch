@@ -4,6 +4,7 @@ const express = require("express");
 const router = express.Router();
 const { getAuthUrl, getAccessToken, getNewAccessToken, getRedditUserInfo } = require("../helpers/redditOauth");
 const { fetchAllPosts } = require("../helpers/fetchAllPosts");
+const {fetchSemanticPosts} = require ("../helpers/fetchSemanticPosts");
 const axios = require("axios");
 const {OpenAI} = require("openai");
 require("dotenv").config();
@@ -243,7 +244,8 @@ router.get("/posts", async (req, res) => {
       // Use the helper function to fetch posts for all keywords
 
       //const posts = await fetchPostsWithAuth(keywords, relevantSubreddits);
-      const posts = await fetchAllPosts(keywords, relevantSubreddits, savedAccessToken, savedRefreshToken);
+      //const posts = await fetchAllPosts(keywords, relevantSubreddits, savedAccessToken, savedRefreshToken);
+      const posts = await fetchSemanticPosts(keywords, savedAccessToken, savedRefreshToken);
       res.json(posts);
     } catch (err) {
       console.error("Reddit API error:", err.response?.data || err.message);

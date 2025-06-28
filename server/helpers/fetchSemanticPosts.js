@@ -1,13 +1,19 @@
 const axios = require('axios');
+const {OpenAI} = require('openai') ;
+require("dotenv").config();
 
 
-async function fetchAllPosts(keywords, relevantSubreddits, savedAccessToken, savedRefreshToken) {
+async function fetchSemanticPosts(keywords, savedAccessToken, savedRefreshToken) {
     let headers = {
       Authorization: `Bearer ${savedAccessToken}`,
       "User-Agent": process.env.USER_AGENT
     };
+
+    const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+
+
   
-    const subredditQuery = relevantSubreddits.join("+");
+    //const subredditQuery = relevantSubreddits.join("+");
     let allKeywordsResults = [];
     let allSubredditsResults = [];
   
@@ -110,6 +116,39 @@ async function fetchAllPosts(keywords, relevantSubreddits, savedAccessToken, sav
 
     //search based on Subreddits
     for (const keyword of keywords) {
+
+        const systemPrompt = "You have to get me Relevant and existing, actual subreddits";
+        const userPrompt = `here is the keyword ${keywords}. return an array of strings and dont include "r/" []`;
+
+        const openai_subreddits = await openai.chat.completions.create({
+            model: "gpt-3.5-turbo", // or "gpt-3.5-turbo"
+            messages: [
+              { role: "system", content: systemPrompt},
+              { role: "user", content: userPrompt }
+            ],
+            max_tokens: 300,
+            temperature: 0.7
+          });
+
+          
+          const final_subreddits_raw = openai_subreddits.choices[0].message.content.trim();
+          let final_subreddits;
+
+          try {
+            final_subreddits = JSON.parse(final_subreddits_raw); // now an array
+          } catch (err) {
+            console.error("Failed to parse OpenAI response as JSON array:", final_subreddits_raw);
+            return; // or handle gracefully
+          }
+
+          if (!Array.isArray(final_subreddits) || final_subreddits.length === 0) {
+            console.error("OpenAI returned invalid subreddit list.");
+            return;
+          }
+
+          const subredditQuery = final_subreddits.join("+");
+
+
       try {
         const response = await axios.get(`https://oauth.reddit.com/r/${subredditQuery}/search`, {
           headers,
@@ -218,4 +257,4 @@ async function fetchAllPosts(keywords, relevantSubreddits, savedAccessToken, sav
     return allResults;
   }
 
-  module.exports = { fetchAllPosts };
+  module.exports = { fetchSemanticPosts };
