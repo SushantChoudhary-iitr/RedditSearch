@@ -21,7 +21,7 @@ function UserInfo() {
   useEffect(() => {
     const redditUsername = localStorage.getItem("redditUsername");
     if (!redditUsername) return;
-    fetch("https://redditsearch-5irh.onrender.com/get-user-info", {
+    fetch("https://redditsearch-production.up.railway.app/get-user-info", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ redditUsername })
@@ -53,7 +53,7 @@ function UserInfo() {
     setError("");
     const redditUsername = localStorage.getItem("redditUsername");
     try {
-      const response = await fetch("https://redditsearch-5irh.onrender.com/save-user-info", {
+      const response = await fetch("https://redditsearch-production.up.railway.app/save-user-info", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...form, redditUsername }),
