@@ -118,7 +118,7 @@ async function fetchSemanticPosts(keywords, savedAccessToken, savedRefreshToken)
     for (const keyword of keywords) {
 
         const systemPrompt = "You have to get me Relevant and existing, actual subreddits";
-        const userPrompt = `here is the keyword ${keywords}. return an array of strings and dont include "r/" []`;
+        const userPrompt = `here is the keyword ${keywords}. return an array of strings and dont include "r/" eg: ["saas", "marketing",....]`;
 
         const openai_subreddits = await openai.chat.completions.create({
             model: "gpt-3.5-turbo", // or "gpt-3.5-turbo"
