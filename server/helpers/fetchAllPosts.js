@@ -18,7 +18,7 @@ async function fetchAllPosts(keywords, relevantSubreddits, savedAccessToken, sav
           headers,
           params: {
             q: keyword,
-            sort: "top",
+            sort: "hot",
             t: "month",
             limit: 10,
             restrict_sr: false
@@ -67,7 +67,7 @@ async function fetchAllPosts(keywords, relevantSubreddits, savedAccessToken, sav
             headers,
             params: {
               q: keyword,
-              sort: "top",
+              sort: "hot",
               t: "month",
               limit: 10,
               restrict_sr: false
