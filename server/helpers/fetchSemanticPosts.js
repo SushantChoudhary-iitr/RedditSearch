@@ -132,6 +132,7 @@ async function fetchSemanticPosts(keywords, savedAccessToken, savedRefreshToken)
 
           
           const final_subreddits_raw = openai_subreddits.choices[0].message.content.trim();
+          console.log(`openai subreddits ${final_subreddits_raw}`);
           let final_subreddits;
 
           try {
