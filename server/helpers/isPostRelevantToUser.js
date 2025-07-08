@@ -11,6 +11,8 @@ async function isPostRelevantToUser(post, userProfile) {
     notableResults
   } = userProfile;
 
+  console.log("checking relevance for :" , brandDescription, targetAudience, coreProblems, keySolutionProduct, notableResults);
+
   const title = post.title || "";
   const body = post.body || "";
 
