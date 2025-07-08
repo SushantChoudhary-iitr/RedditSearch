@@ -1,6 +1,8 @@
 const axios = require('axios');
 const {OpenAI} = require('openai') ;
+const users = require("../models/user");
 const {getNewAccessToken} = require("./redditOauth");
+const {isPostRelevantToUser} = require("./isPostRelevantToUser");
 require("dotenv").config();
 
 
@@ -9,6 +11,9 @@ async function fetchSemanticPosts(keywords, savedAccessToken, savedRefreshToken)
       Authorization: `Bearer ${savedAccessToken}`,
       "User-Agent": process.env.USER_AGENT
     };
+
+    const user = await users.findOne({refreshToken: savedRefreshToken});
+    //const { brandDescription, coreProblems, notableResults, targetAudience } = user;
 
     const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
@@ -59,9 +64,17 @@ async function fetchSemanticPosts(keywords, savedAccessToken, savedRefreshToken)
             };
         });
 
+        // Wait for all relevance checks
+        const filterResults = await Promise.all(
+        posts.map(post => isPostRelevantToUser(post, user))
+        );
+
+       // Filter using the results
+       const relevantPosts = posts.filter((_, idx) => filterResults[idx]);
+
         //.filter(post => post.confidence > 0)
   
-        allKeywordsResults.push(...posts);
+        allKeywordsResults.push(...relevantPosts);
   
       } catch (err) {
         if (err.response && err.response.status === 401) {
@@ -105,10 +118,18 @@ async function fetchSemanticPosts(keywords, savedAccessToken, savedRefreshToken)
                 num_comments: p.data.num_comments,
                 confidence
               };
-          });        
+          });     
+          
+          // Wait for all relevance checks
+        const filterResults = await Promise.all(
+          retryPosts.map(post => isPostRelevantToUser(post, user))
+          );
+  
+         // Filter using the results
+         const relevantPosts = retryPosts.filter((_, idx) => filterResults[idx]);
   
   
-          allKeywordsResults.push(...retryPosts);
+          allKeywordsResults.push(...relevantPosts);
         } else {
           console.error(`Failed for keyword ${keyword}:`, err.message);
         }
@@ -118,7 +139,7 @@ async function fetchSemanticPosts(keywords, savedAccessToken, savedRefreshToken)
     //search based on Subreddits
     for (const keyword of keywords) {
 
-        const systemPrompt = "You have to get me Relevant and existing, actual subreddits";
+        const systemPrompt = "You have to get me Relevant and existing, actual subreddits where people are likely to be discussing related pain points, challenges, or decisions. Avoid niche meme subs or NSFW communities";
         const userPrompt = `here is the keyword ${keywords}. return an array of strings and dont include "r/" eg: ["saas", "marketing",....]`;
 
         const openai_subreddits = await openai.chat.completions.create({
@@ -127,7 +148,7 @@ async function fetchSemanticPosts(keywords, savedAccessToken, savedRefreshToken)
               { role: "system", content: systemPrompt},
               { role: "user", content: userPrompt }
             ],
-            max_tokens: 300,
+            max_tokens: 60,
             temperature: 0.7
           });
 
@@ -189,10 +210,18 @@ async function fetchSemanticPosts(keywords, savedAccessToken, savedRefreshToken)
               confidence
             };
         });
+
+        // Wait for all relevance checks
+        const filterResults = await Promise.all(
+          posts.map(post => isPostRelevantToUser(post, user))
+          );
+  
+         // Filter using the results
+         const relevantPosts = posts.filter((_, idx) => filterResults[idx]);
   
         //.filter(post => post.confidence > 0)
   
-        allSubredditsResults.push(...posts);
+        allSubredditsResults.push(...relevantPosts);
   
       } catch (err) {
         if (err.response && err.response.status === 401) {
@@ -237,11 +266,19 @@ async function fetchSemanticPosts(keywords, savedAccessToken, savedRefreshToken)
                 confidence
               };
           });
+
+          // Wait for all relevance checks
+        const filterResults = await Promise.all(
+          retryPosts.map(post => isPostRelevantToUser(post, user))
+          );
+  
+         // Filter using the results
+         const relevantPosts = retryPosts.filter((_, idx) => filterResults[idx]);
   
           //.filter(post => post.confidence > 0)
   
   
-          allSubredditsResults.push(...retryPosts);
+          allSubredditsResults.push(...relevantPosts);
         } else {
           console.error(`Failed for keyword ${keyword}:`, err.message);
         }
