@@ -30,7 +30,7 @@ Here is the user's brand profile:
 - Solution: ${keySolutionProduct}
 - Results: ${notableResults}
 
-Question: Is this post a good opportunity for the user to reply in a non-promotional, helpful way while softly showcasing their brand. "Yes" only if it is clearly relevant, nothing vague? 
+Question: Is this post a good opportunity for the user to reply in a non-promotional, helpful way while softly showcasing their brand. "Yes" only if it is clearly relevant to ${targetAudience} and ${coreProblems}, nothing vague? 
 Answer "Yes" or "No" only(without any punctuation).
 `;
 
