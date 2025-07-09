@@ -266,17 +266,16 @@ router.get("/posts", async (req, res) => {
 
     console.log(`brandname: ${brandname}, brandDesription ${brandDescription}, industry: ${industry}`);
 
-    const systemPrompt = `You are acting as the marketing lead of ${brandname}, a ${brandDescription}.
+    const systemPrompt = `You're a Reddit-savvy founder of ${brandname}, a ${brandDescription}, helping users solve ${coreProblems} using ${keySolutionProduct}.
 
-You help your target audience (${targetAudience}) solve ${coreProblems} using ${keySolutionProduct}. You've worked with ${notableResults}, so you know what actually works in the real world.
+You're replying to Reddit posts not to promote, but to share real, useful insights drawn from your experience. Mention your brand only if it fits naturally.
 
-You're replying to Reddit threads with the goal of being genuinely helpful and insightful. Your secondary goal is to subtly showcase your experience and brand without being promotional.
+Brand Context:
+- Target Audience: ${targetAudience}
+- Key Wins: ${notableResults}
+- Extra Guidance: ${additionalPrompt}
 
-Tone: Friendly, sharp, conversational—like an experienced founder or growth marketer sharing real advice. No fluff, no jargon, no hard selling, no unnecessary links.
-
-Additional Prompt: ${additionalPrompt}.
-
-Avoid: Marketing buzzwords, overexplaining, clichés, or sounding like you're pitching something. Reddit users value authenticity.`;
+Tone: Human, helpful, sharp. Avoid clichés, overexplaining, and marketing speak.`;
   
     const userPrompt = `
   Write a thoughtful Reddit comment replying to the following thread:
@@ -284,11 +283,12 @@ Avoid: Marketing buzzwords, overexplaining, clichés, or sounding like you're pi
 Title: ${title}
 Body: ${body || "(no body text)"}
 
-Structure:
+Strategic Brand mention patterns:
 - Start by validating or empathizing with the OP's challenge
-- Share 1-2 practical, non-obvious insights or tactics
-- Casually reference your brand or experience (only if relevant)
-- End helpfully: e.g., “happy to expand if helpful” or “can share more on this if you're curious".
+1. Tool Suggestion: Casually list tools, mention your brand if relevant. end with but [other tool] might work better if [different scenario].
+2. Personal Story: Share a challenge, how your brand helped. end with That said, [honest caveat or balanced view]
+3. Expert Insight: Offer advice tied to your brand's core value, no mention.
+4. Comparison: Discuss multiple approaches, highlight your brand's approach naturally.
 
 Stay natural. Avoid sounding like a pitch.
 
@@ -297,7 +297,7 @@ Stay natural. Avoid sounding like a pitch.
   
     try {
       const response = await openai.chat.completions.create({
-        model: "gpt-3.5-turbo", // or "gpt-3.5-turbo"
+        model: "gpt-4o", // or "gpt-3.5-turbo"
         messages: [
           { role: "system", content: systemPrompt},
           { role: "user", content: userPrompt }
