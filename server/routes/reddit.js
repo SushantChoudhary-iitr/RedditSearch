@@ -283,8 +283,9 @@ Tone: Human, helpful, sharp. Avoid clichés, overexplaining, and marketing speak
 Title: ${title}
 Body: ${body || "(no body text)"}
 
-Strategic Brand mention patterns:
-- Start by validating or empathizing with the OP's challenge
+- Start by validating or empathizing with the OP's challenge. Use conversational style: "I've found that...", "In my experience...", "What's worked for me...".
+Include mild imperfections: occasional typos, contractions, casual grammar.
+Strategic Brand Mention Patterns:
 1. Tool Suggestion: Casually list tools, mention your brand if relevant. end with but [other tool] might work better if [different scenario].
 2. Personal Story: Share a challenge, how your brand helped. end with That said, [honest caveat or balanced view]
 3. Expert Insight: Offer advice tied to your brand's core value, no mention.

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import { FaArrowUp, FaRegComment, FaChartLine, FaRegCopy } from "react-icons/fa";
+import { useSearch } from "./SearchContext";
 
 function GetPosts() {
-  const [keywords, setKeywords] = useState("");
-  const [results, setResults] = useState([]);
+  const { searchResults, setSearchResults, lastKeywords, setLastKeywords } = useSearch();
+  const [keywords, setKeywords] = useState(lastKeywords.join(", "));
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [replyLoading, setReplyLoading] = useState({});
@@ -35,15 +36,21 @@ function GetPosts() {
     }
   }, [location, navigate]);
 
+  // When lastKeywords changes (e.g. on tab switch), update input
+  useEffect(() => {
+    setKeywords(lastKeywords.join(", "));
+  }, [lastKeywords]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError("");
-    setResults([]);
+    setSearchResults([]);
     const keywordArray = keywords
       .split(",")
       .map((k) => k.trim())
       .filter((k) => k.length > 0);
+    setLastKeywords(keywordArray);
     try {
       const response = await fetch(`https://redditsearch-production.up.railway.app/keyword-search`, {
         method: "POST",
@@ -52,7 +59,7 @@ function GetPosts() {
       });
       if (!response.ok) throw new Error("Failed to fetch results");
       const data = await response.json();
-      setResults(data);
+      setSearchResults(data);
     } catch (err) {
       setError(err.message || "Something went wrong");
     }
@@ -211,11 +218,11 @@ function GetPosts() {
         </form>
         {loading && <p style={{ color: '#2193b0', fontWeight: 500 }}>Loading...</p>}
         {error && <p style={{ color: "#e74c3c", fontWeight: 500 }}>{error}</p>}
-        {!loading && results.length === 0 && !error && (
+        {!loading && searchResults.length === 0 && !error && (
           <p style={{ color: "#888", fontWeight: 500 }}>No posts found. Try different keywords.</p>
         )}
         <ul style={{ listStyle: "none", padding: 0, width: "100%", marginTop: 10, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          {results.map((post, idx) => (
+          {searchResults.map((post, idx) => (
             <li
               key={idx}
               style={{
@@ -401,8 +408,8 @@ function GetPosts() {
                   onChange={e => handleReplyChange(idx, e.target.value)}
                   style={{
                     width: '100%',
-                    minHeight: 90,
-                    height: replies[idx] && replies[idx].length > 200 ? 'auto' : 90,
+                    minHeight: 150,
+                    height: replies[idx] && replies[idx].length > 200 ? 'auto' : 150,
                     maxHeight: 350,
                     overflowY: 'auto',
                     fontSize: 16,
