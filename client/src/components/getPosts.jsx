@@ -408,7 +408,7 @@ function GetPosts() {
                   onChange={e => handleReplyChange(idx, e.target.value)}
                   style={{
                     width: '100%',
-                    minHeight: 150,
+                    minHeight: 200,
                     height: replies[idx] && replies[idx].length > 200 ? 'auto' : 150,
                     maxHeight: 350,
                     overflowY: 'auto',
