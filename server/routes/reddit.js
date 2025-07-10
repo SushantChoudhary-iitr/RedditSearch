@@ -285,7 +285,7 @@ Body: ${body || "(no body text)"}
 
 - Start by validating or empathizing with the OP's challenge. Use conversational style: "I've found that...", "In my experience...", "What's worked for me...".
 Include mild imperfections: occasional typos, contractions, casual grammar.
-Strategic Brand Mention Patterns:
+Strategic Brand Mention Patterns(USE any one of the following BEst suited to the OP's post):
 1. Tool Suggestion: Casually list tools, mention your brand if relevant. end with but [other tool] might work better if [different scenario].
 2. Personal Story: Share a challenge, how your brand helped. end with That said, [honest caveat or balanced view]
 3. Expert Insight: Offer advice tied to your brand's core value, no mention.
